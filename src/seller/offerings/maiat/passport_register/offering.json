@@ -1,0 +1,86 @@
+{
+  "name": "passport_register",
+  "description": "Register for a Maiat Passport — get a free ENS name (yourname.maiat.eth), on-chain ERC-8004 identity on Base, KYA verification code, and 10 Scarab bonus. Works for both AI agents and humans. Wallet is auto-created via Privy if not provided. Use when: you want a verifiable on-chain identity, need an ENS name for your agent, or want to participate in the Maiat trust network (vote, review, earn Scarab). Registration is free and gasless.",
+  "jobFee": 0.03,
+  "jobFeeType": "fixed",
+  "requiredFunds": false,
+  "requirement": {
+    "type": "object",
+    "properties": {
+      "ensName": {
+        "type": "string",
+        "description": "Desired ENS name (3+ chars, lowercase letters/numbers/hyphens). Will become ensName.maiat.eth"
+      },
+      "walletAddress": {
+        "type": "string",
+        "description": "Optional 0x wallet address. If omitted, a Privy server wallet is created automatically for free."
+      },
+      "type": {
+        "type": "string",
+        "enum": ["agent", "human"],
+        "description": "Account type: 'agent' for AI agents (gets ERC-8004 + KYA), 'human' for people (ENS only). Default: agent"
+      },
+      "referredBy": {
+        "type": "string",
+        "description": "Optional referrer ENS name (without .maiat.eth). Both parties get +5 Scarab bonus."
+      }
+    },
+    "required": ["ensName"]
+  },
+  "deliverable": {
+    "type": "object",
+    "properties": {
+      "ensName": { "type": "string", "description": "Registered ENS name (without .maiat.eth)" },
+      "ensFullName": { "type": "string", "description": "Full ENS name (e.g. butler.maiat.eth)" },
+      "walletAddress": {
+        "type": "string",
+        "description": "Wallet address (provided or auto-created)"
+      },
+      "type": { "type": "string", "description": "agent or human" },
+      "trustScore": { "type": "number", "description": "Initial trust score (0-100)" },
+      "verdict": { "type": "string", "description": "trusted | proceed | caution | avoid" },
+      "scarabBalance": {
+        "type": "number",
+        "description": "Starting Scarab balance (10 base + 5 referral)"
+      },
+      "kyaCode": {
+        "type": "string",
+        "description": "KYA verification code (e.g. MAIAT-4Y6V) — agents only"
+      },
+      "erc8004AgentId": {
+        "type": "number",
+        "description": "On-chain ERC-8004 agent ID on Base — agents only"
+      },
+      "erc8004Status": {
+        "type": "string",
+        "description": "registered | pending | failed | skipped"
+      },
+      "ensRegistered": {
+        "type": "boolean",
+        "description": "Whether ENS was successfully registered"
+      },
+      "privyWalletCreated": {
+        "type": "boolean",
+        "description": "Whether a new wallet was auto-created"
+      },
+      "referralApplied": { "type": "boolean", "description": "Whether referral bonus was applied" },
+      "isNew": {
+        "type": "boolean",
+        "description": "True if newly registered, false if already existed"
+      },
+      "kya": {
+        "type": "object",
+        "description": "KYA social verification info (agents only)",
+        "properties": {
+          "code": { "type": "string" },
+          "shareUrl": { "type": "string", "description": "URL to share for endorsements" },
+          "tweetTemplate": {
+            "type": "string",
+            "description": "Ready-to-post tweet for endorsement"
+          },
+          "instruction": { "type": "string", "description": "How endorsements work" }
+        }
+      }
+    }
+  }
+}
