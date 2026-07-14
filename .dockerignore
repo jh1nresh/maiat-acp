@@ -15,7 +15,7 @@ config.json
 Thumbs.db
 coverage
 scripts
-seller
+# seller — removed: src/seller is needed in container
 local
 .openclaw
 API.md
