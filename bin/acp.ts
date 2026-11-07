@@ -10,8 +10,6 @@
 //   --version    Show version
 // =============================================================================
 
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
 import { createRequire } from "module";
 import { setJsonMode } from "../src/lib/output.js";
 import { requireApiKey } from "../src/lib/config.js";
